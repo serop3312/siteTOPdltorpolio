@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}">Cocktail Explorer</a>
+        <form class="form-inline my-2 my-lg-0" action="{% url 'search_cocktails' %}" method="get">
+            <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search cocktails..." aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </nav>
+    <div class="container mt-5">
+        <h1>Search Results</h1>
+        <div class="row">
+            {% for cocktail in cocktails %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ cocktail.strDrinkThumb }}" class="card-img-top" alt="{{ cocktail.strDrink }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ cocktail.strDrink }}</h5>
+                            <a href="{% url 'cocktail_detail' cocktail_id=cocktail.idDrink %}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% load custom_filters %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ cocktail.strDrink }}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}">Cocktail Explorer</a>
+        <form class="form-inline my-2 my-lg-0" action="{% url 'search_cocktails' %}" method="get">
+            <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search cocktails..." aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </nav>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ cocktail.strDrinkThumb }}" class="img-fluid" alt="{{ cocktail.strDrink }}">
+            </div>
+            <div class="col-md-6">
+                <h1>{{ cocktail.strDrink }}</h1>
+                <h2>Ingredients</h2>
+                <ul>
+                    {% for i in "123456789"|make_list %}
+                        {% with 'strIngredient'|add:i as ingredient %}
+                            {% if cocktail|get_item:ingredient %}
+                                <li>{{ cocktail|get_item:ingredient }}</li>
+                            {% endif %}
+                        {% endwith %}
+                    {% endfor %}
+                </ul>
+                <h2>Instructions</h2>
+                <p>{{ cocktail.strInstructions }}</p>
+                <a href="{% url 'add_to_favorites' cocktail_id=cocktail.idDrink %}" class="btn btn-primary">Add to Favorites</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
